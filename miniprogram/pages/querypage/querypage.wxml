@@ -1,0 +1,3 @@
+<!--miniprogram/pages/querypage/querypage.wxml-->
+<text>信息查询</text>
+<button bindtap="export">导出全部数据</button>

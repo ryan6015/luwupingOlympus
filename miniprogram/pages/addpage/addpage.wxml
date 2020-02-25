@@ -1,0 +1,66 @@
+<!--miniprogram/pages/addpage/addpage.wxml-->
+<mp-form-page title="Olympus信息收集" subtitle="">
+  <mp-form id="form" models="{{formData}}">
+    <mp-cells ext-class="my-cells" title="">
+      <mp-cell prop="hospitalName" title="医院名称" ext-class="">
+        <input bindinput="formInputChange" data-field="hospitalName" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="department" title="科室" ext-class="">
+        <input bindinput="formInputChange" data-field="department" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="laparNum" title="腔镜数量" ext-class="">
+        <input bindinput="formInputChange" type="number" data-field="laparNum" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+       <mp-cell prop="isOlympus" title="品牌名称" ext-class="">
+        <picker bindchange="bindIsOlympusChange" value="{{isOlympus}}" range="{{isOlympusOptions}}">
+          <view class="weui-select">{{isOlympusOptions[isOlympus]}}</view>
+        </picker>
+      </mp-cell>
+      <!-- <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">品牌名称</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker bindchange="bindIsOlympusChange" value="{{isOlympus}}" range="{{isOlympusOptions}}">
+              <view class="weui-select">{{isOlympusOptions[isOlympus]}}</view>
+            </picker>
+          </view>
+        </view>
+      </view> -->
+    </mp-cells>
+    <mp-cells title="选择型号">
+      <mp-checkbox-group prop="olympusModel" multi="{{true}}" bindchange="bindOlympusModelChange">
+        <mp-checkbox wx:for="{{olympusModelOptions}}" wx:key="value" label="{{item.name}}" value="{{item.name}}" checked="{{item.checked}}"></mp-checkbox>
+      </mp-checkbox-group>
+    </mp-cells>
+    <mp-cells>
+      <mp-cell prop="brand" title="其它品牌名称" ext-class="">
+        <input bindinput="formInputChange" data-field="brand" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="model" title="型号" ext-class="">
+        <input bindinput="formInputChange" data-field="model" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="year" title="购买年份" ext-class="">
+        <picker data-field="year" mode="date" value="{{year}}" fields="year" bindchange="bindYearChange">
+          <view class="weui-input">{{year}}</view>
+        </picker>
+      </mp-cell>
+      <mp-cell prop="bedNum" title="科室床位数" ext-class="">
+        <input bindinput="formInputChange" type="number" data-field="bedNum" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="income" title="科室收入" ext-class="">
+        <input bindinput="formInputChange" type="number" data-field="income" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="operationNum" title="科室总手术量" ext-class="">
+        <input bindinput="formInputChange" type="number" data-field="operationNum" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="percent" title="腔镜手术占比" ext-class="">
+        <input bindinput="formInputChange" type="number" data-field="percent" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+    </mp-cells>
+  </mp-form>
+  <view slot="button">
+    <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
+  </view>
+</mp-form-page>

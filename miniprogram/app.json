@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/addpage/addpage",
+    "pages/querypage/querypage"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "信息录入",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#04BE02",
+    "backgroundColor": "#F6F6F6",
+    "list": [
+      {
+        "pagePath": "pages/addpage/addpage",
+        "text": "录入",
+        "iconPath": "images/pencil.png",
+        "selectedIconPath": "images/pencil_active.png"
+      },
+      {
+        "pagePath": "pages/querypage/querypage",
+        "text": "查询",
+        "iconPath": "images/query.png",
+        "selectedIconPath": "images/query_active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}
