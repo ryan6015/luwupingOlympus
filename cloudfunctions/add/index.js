@@ -7,11 +7,9 @@ cloud.init()
 exports.main = async (event, context) => {
   return new Promise((resolve, reject) => {
     const db = cloud.database()
-    const hospitals = db.collection('hospitals')
-    hospitals.add({
-      data: {
-        hospitalName: event.hospitalName
-      }
+    const INFO = db.collection('info')
+    INFO.add({
+      data: event
     }).then(res => {
       resolve('success')
     }).catch(() => {

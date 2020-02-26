@@ -35,6 +35,7 @@ Page({
     isOlympusOptions: ['Olympus', '其它'],
     oneButton: [{ text: '确定' }],
     dialogShow: false,
+    submitBtnDisable: false,
     olympusModelOptions: [
       { 'gid': 0, 'name': 'OTV--S400', 'checked': false},
       { 'gid': 1, 'name': 'OTV-S300', 'checked': false},
@@ -47,20 +48,40 @@ Page({
     ]
   },
   submitForm: function () {
-    let that = this
-    console.log(this.data.formData)
     if (validateJs.validate(this.data.formData)) {
+      // this.setData({
+      //   formDataText: JSON.stringify(this.data.formData),
+      //   dialogShow: true
+      // })
       this.setData({
-        formDataText: JSON.stringify(this.data.formData),
-        dialogShow: true
+        submitBtnDisable: true
+      })
+      wx.showLoading({
+        title: '数据提交中...',
+      })
+      wx.cloud.callFunction({
+        name: 'add',
+        data: this.data.formData
+      }).then(res => {
+        this.enableBtnAndHideLoading()
+        wx.showToast({
+          title: '提交成功！'
+        })
+        this.resetFrom()
+      }).catch(() => {
+        this.enableBtnAndHideLoading()
+        wx.showToast({
+          title: '提交失败!',
+          icon: 'none'
+        })
       })
     }
-    // wx.cloud.callFunction({
-    //   name: 'add',
-    //   data: {
-    //     'hospitalName': that.data.formData.hospitalName
-    //   }
-    // })
+  },
+  enableBtnAndHideLoading () {
+    this.setData({
+      submitBtnDisable: false
+    })
+    wx.hideLoading()
   },
   formInputChange (e) {
     const { field } = e.currentTarget.dataset
@@ -74,16 +95,7 @@ Page({
     // 如果品牌名称选择其它
     if (value === '1') {
       brand = ''
-      let checkboxItems = this.data.olympusModelOptions
-      // 清空之前的选择
-      let newCheckboxItems = checkboxItems.map(item => {
-        item.checked = false
-        return item
-      })
-      this.setData({
-        ['formData.olympusModel']: [],
-        olympusModelOptions: newCheckboxItems
-      })
+      this.resetOlympusModel()
     } else {
       this.setData({
         ['formData.model']: '',
@@ -123,6 +135,35 @@ Page({
   tapDialogButton (e) {
     this.setData({
       dialogShow: false
+    })
+  },
+  resetOlympusModel () {
+    let checkboxItems = this.data.olympusModelOptions
+    // 清空之前的选择
+    let newCheckboxItems = checkboxItems.map(item => {
+      item.checked = false
+      return item
+    })
+    this.setData({
+      ['formData.olympusModel']: [],
+      olympusModelOptions: newCheckboxItems
+    })
+  },
+  resetFrom () {
+    this.resetOlympusModel()
+    this.setData({
+      ['formData.hospitalName']: '',
+      ['formData.department']: '',
+      ['formData.isOlympus']: '',
+      ['formData.olympusModel']: [],
+      ['formData.laparNum']: '',
+      ['formData.brand']: '',
+      ['formData.model']: '',
+      ['formData.year']: '',
+      ['formData.bedNum']: '',
+      ['formData.income']: '',
+      ['formData.operationNum']: '',
+      ['formData.percent']: ''
     })
   }
 })
