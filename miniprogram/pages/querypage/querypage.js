@@ -1,79 +1,56 @@
 // miniprogram/pages/querypage/querypage.js
 Page({
-
   /**
    * 页面的初始数据
    */
   data: {
-
+    btnDisable: false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-  export () {
+  exportExcel () {
+    let that = this
+    this.setData({
+      btnDisable: true
+    })
+    wx.showLoading({
+      title: '正在导出'
+    })
+    
     wx.cloud.callFunction({
-      name: 'export'
+      name: 'export',
+      data: {}
     }).then(res => {
-      wx.showToast({
-        title: 'success'
+      let fileID = res.result
+      wx.cloud.downloadFile({
+        fileID
+      }).then(res => {
+        wx.openDocument({
+          filePath: res.tempFilePath,
+          fileType: 'xlsx',
+          success: function (res) {
+            that.setData({
+              btnDisable: false
+            })
+            wx.hideLoading()
+          }
+        })
+        // wx.saveFile({
+        //   tempFilePath: res.tempFilePath,
+        //   success (saveRes) {
+        //     const savedFilePath = saveRes.savedFilePath
+        //     wx.showToast({
+        //       title: savedFilePath
+        //     })
+        //   }
+        // })
       })
     }).catch(() => {
+      wx.hideLoading()
       wx.showToast({
-        title: 'fail',
-        type: 'warn'
+        title: '导出文件失败',
+        type: 'none'
+      })
+      that.setData({
+        btnDisable: true
       })
     })
   }
