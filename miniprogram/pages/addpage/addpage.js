@@ -32,12 +32,19 @@ Page({
       // 腔镜手术占比
       percent: null
     },
+    // 表格数据空备份，用做还原表格
     formDataCopy: {},
+    // 品牌选项值
     isOlympusOptions: ['Olympus', '其它'],
+    // 弹窗按钮
     oneButton: [{ text: '确定' }],
+    // 弹窗开关
     dialogShow: false,
+    // 提交按钮禁用
     submitBtnDisable: false,
+    // 结束年份
     endYear: '2020-01-01',
+    // 型号选项
     olympusModelOptions: [
       { 'gid': 0, 'name': 'OTV--S400', 'checked': false},
       { 'gid': 1, 'name': 'OTV-S300', 'checked': false},
@@ -54,24 +61,25 @@ Page({
    */
   onReady: function () {
     let endDate = this.getDate()
-    let b = JSON.stringify(this.data.formData)
-    let a = JSON.parse(b)
+    let b = JSON.parse(JSON.stringify(this.data.formData))
     this.setData({
-      formDataCopy: a,
+      formDataCopy: b,
       endYear: endDate
     })
   },
+  /**
+   * 获取今年年份
+   */
   getDate () {
     let now = new Date()
     let year = now.getFullYear()
     return `${year}-01-01`
   },
+  /**
+   * 提交数据
+   */
   submitForm: function () {
     if (validateJs.validate(this.data.formData)) {
-      // this.setData({
-      //   formDataText: JSON.stringify(this.data.formData),
-      //   dialogShow: true
-      // })
       this.setData({
         submitBtnDisable: true
       })
@@ -96,6 +104,9 @@ Page({
       })
     }
   },
+  /**
+   * 提交成功后关闭提交按钮禁用和隐藏loading
+   */
   enableBtnAndHideLoading () {
     this.setData({
       submitBtnDisable: false
@@ -156,6 +167,9 @@ Page({
       dialogShow: false
     })
   },
+  /**
+   * 重置olympus型号选择
+   */
   resetOlympusModel () {
     let checkboxItems = this.data.olympusModelOptions
     // 清空之前的选择
@@ -168,11 +182,20 @@ Page({
       olympusModelOptions: newCheckboxItems
     })
   },
+  /**
+   * 重置表单并滚到顶部
+   */
   resetFrom () {
     this.resetOlympusModel()
     let emptyFormData = JSON.parse(JSON.stringify(this.data.formDataCopy))
     this.setData({
       formData: emptyFormData
+    })
+    this.scrollToTop()
+  },
+  scrollToTop () {
+    wx.pageScrollTo({
+      scrollTop: 0
     })
   }
 })

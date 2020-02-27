@@ -25,10 +25,10 @@
     </mp-cells>
     <mp-cells>
       <mp-cell prop="brand" title="其它品牌名称" ext-class="" wx:if="{{formData.isOlympus == 1}}">
-        <input bindinput="formInputChange" data-field="brand" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" data-field="brand" value="{{formData.brand}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="model" title="型号" ext-class="" wx:if="{{formData.isOlympus == 1}}">
-        <input bindinput="formInputChange" data-field="model" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" data-field="model" value="{{formData.model}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="year" title="购买年份" ext-class="">
         <picker data-field="year" mode="date" fields="year" end="{{endYear}}" bindchange="bindYearChange">
@@ -36,16 +36,16 @@
         </picker>
       </mp-cell>
       <mp-cell prop="bedNum" title="科室床位数(张)" ext-class="">
-        <input bindinput="formInputChange" type="number" data-field="bedNum" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" type="number" data-field="bedNum" value="{{formData.bedNum}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="income" title="科室收入(万)" ext-class="">
-        <input bindinput="formInputChange" type="digit" data-field="income" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" type="digit" data-field="income" value="{{formData.income}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="operationNum" title="科室总手术量" ext-class="">
-        <input bindinput="formInputChange" type="number" data-field="operationNum" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" type="number" data-field="operationNum" value="{{formData.operationNum}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="percent" title="腔镜手术占比(%)" ext-class="">
-        <input bindinput="formInputChange" type="digit" data-field="percent" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" type="digit" data-field="percent" value="{{formData.percent}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
     </mp-cells>
   </mp-form>
