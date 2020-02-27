@@ -1,15 +1,15 @@
 <!--miniprogram/pages/addpage/addpage.wxml-->
 <mp-form-page title="Olympus信息收集" subtitle="">
   <mp-form id="form" models="{{formData}}">
-    <mp-cells ext-class="my-cells" title="">
+    <mp-cells ext-class="" title="">
       <mp-cell prop="hospitalName" title="医院名称" ext-class="">
-        <input bindinput="formInputChange" data-field="hospitalName" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" data-field="hospitalName" value="{{formData.hospitalName}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="department" title="科室" ext-class="">
-        <input bindinput="formInputChange" data-field="department" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" data-field="department" value="{{formData.department}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="laparNum" title="腔镜数量" ext-class="">
-        <input bindinput="formInputChange" type="number" data-field="laparNum" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" type="number" data-field="laparNum" value="{{formData.laparNum}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
        <mp-cell prop="isOlympus" title="品牌名称" ext-class="">
         <picker bindchange="bindIsOlympusChange" value="{{formData.isOlympus}}" range="{{isOlympusOptions}}">
@@ -17,7 +17,7 @@
         </picker>
       </mp-cell>
     </mp-cells>
-    <mp-cells title="选择Olympus腔镜型号" wx:if="{{formData.isOlympus == 0}}">
+    <mp-cells title="选择Olympus腔镜型号" wx:if="{{formData.isOlympus === '0'}}">
       <mp-checkbox-group prop="olympusModel" multi="{{true}}" bindchange="bindOlympusModelChange">
         <!-- wx:key 后面一个字符串代表item里面的属性 -->
         <mp-checkbox wx:for="{{olympusModelOptions}}" wx:key="gid" label="{{item.name}}" value="{{item.name}}" checked="{{item.checked}}"></mp-checkbox>
@@ -45,12 +45,13 @@
         <input bindinput="formInputChange" type="number" data-field="operationNum" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="percent" title="腔镜手术占比(%)" ext-class="" wx:if="{{formData.isOlympus == 1}}">
-        <input bindinput="formInputChange" type="number" data-field="percent" class="weui-input" placeholder="请输入"/>
+        <input bindinput="formInputChange" type="digit" data-field="percent" class="weui-input" placeholder="请输入"/>
       </mp-cell>
     </mp-cells>
   </mp-form>
   <view slot="button">
     <button class="weui-btn" type="primary" bindtap="submitForm" disabled="{{submitBtnDisable}}">确定</button>
+    <button class="weui-btn" type="warn" bindtap="resetFrom">重置</button>
   </view>
   <mp-dialog title="录入结果" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
     <view>{{formDataText}}</view>

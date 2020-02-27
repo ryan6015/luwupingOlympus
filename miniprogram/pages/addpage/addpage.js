@@ -32,6 +32,7 @@ Page({
       // 腔镜手术占比
       percent: null
     },
+    formDataCopy: {},
     isOlympusOptions: ['Olympus', '其它'],
     oneButton: [{ text: '确定' }],
     dialogShow: false,
@@ -46,6 +47,16 @@ Page({
       { 'gid': 6, 'name': 'OTV-S7', 'checked': false},
       { 'gid': 7, 'name': 'CV-170', 'checked': false}
     ]
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+    let b = JSON.stringify(this.data.formData)
+    let a = JSON.parse(b)
+    this.setData({
+      formDataCopy: a
+    })
   },
   submitForm: function () {
     if (validateJs.validate(this.data.formData)) {
@@ -151,19 +162,9 @@ Page({
   },
   resetFrom () {
     this.resetOlympusModel()
+    let emptyFormData = JSON.parse(JSON.stringify(this.data.formDataCopy))
     this.setData({
-      ['formData.hospitalName']: '',
-      ['formData.department']: '',
-      ['formData.isOlympus']: '',
-      ['formData.olympusModel']: [],
-      ['formData.laparNum']: '',
-      ['formData.brand']: '',
-      ['formData.model']: '',
-      ['formData.year']: '',
-      ['formData.bedNum']: '',
-      ['formData.income']: '',
-      ['formData.operationNum']: '',
-      ['formData.percent']: ''
+      formData: emptyFormData
     })
   }
 })
