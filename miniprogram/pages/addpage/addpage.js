@@ -30,7 +30,13 @@ Page({
       // 科室总手术量
       operationNum: null,
       // 腔镜手术占比
-      percent: null
+      percent: null,
+      // 提交人公司
+      company: '',
+      // 提交人姓名
+      submitter: '',
+      // 地区
+      area: ''
     },
     // 表格数据空备份，用做还原表格
     formDataCopy: {},
@@ -54,6 +60,10 @@ Page({
       { 'gid': 5, 'name': 'OTV-S7PRO', 'checked': false},
       { 'gid': 6, 'name': 'OTV-S7', 'checked': false},
       { 'gid': 7, 'name': 'CV-170', 'checked': false}
+    ],
+    // 地区范围
+    areaOptions: [
+      '昆明市','曲靖市','玉溪市','昭通市','丽江市','普洱市','保山市','临沧市','楚雄州','红河州','迪庆州','文山州','西双版纳州','大理州','德宏州','怒江州'
     ]
   },
   /**
@@ -66,41 +76,36 @@ Page({
       formDataCopy: b,
       endYear: endDate
     })
+    this.getPersonInfo()
   },
   /**
    * 获取今年年份
    */
   getDate () {
     let now = new Date()
-    let year = now.getFullYear()
-    return `${year}-01-01`
+    return `${now.getFullYear()}-01-01`
   },
   /**
    * 提交数据
    */
   submitForm: function () {
     if (validateJs.validate(this.data.formData)) {
-      this.setData({
-        submitBtnDisable: true
-      })
-      wx.showLoading({
-        title: '数据提交中...',
-      })
+      this.setData({ submitBtnDisable: true })
+      wx.showLoading({ title: '数据提交中...' })
+      // 转换成中文名字地区后提交数据
+      let submitData = JSON.parse(JSON.stringify(this.data.formData))
+      submitData['area'] = this.data.areaOptions[submitData.area]
       wx.cloud.callFunction({
         name: 'add',
-        data: this.data.formData
+        data: submitData
       }).then(res => {
         this.enableBtnAndHideLoading()
-        wx.showToast({
-          title: '提交成功！'
-        })
+        wx.showToast({ title: '提交成功！' })
+        this.savePersonInfo()
         this.resetFrom()
       }).catch(() => {
         this.enableBtnAndHideLoading()
-        wx.showToast({
-          title: '提交失败!',
-          icon: 'none'
-        })
+        wx.showToast({ title: '提交失败!', icon: 'none' })
       })
     }
   },
@@ -115,9 +120,7 @@ Page({
   },
   formInputChange (e) {
     const { field } = e.currentTarget.dataset
-    this.setData({
-      [`formData.${field}`]: e.detail.value
-    })
+    this.setData({ [`formData.${field}`]: e.detail.value })
   },
   bindIsOlympusChange: function (e) {
     let value = e.detail.value
@@ -141,6 +144,9 @@ Page({
       [`formData.brand`]: brand
     })
   },
+  bindAreaChange: function (e) {
+    this.setData({ [`formData.area`]: e.detail.value })
+  },
   bindOlympusModelChange: function (e) {
     var checkboxItems = this.data.olympusModelOptions, values = e.detail.value
     for (var i = 0, lenI = checkboxItems.length; i < lenI; i++) {
@@ -163,9 +169,7 @@ Page({
     })
   },
   tapDialogButton (e) {
-    this.setData({
-      dialogShow: false
-    })
+    this.setData({ dialogShow: false })
   },
   /**
    * 重置olympus型号选择
@@ -188,14 +192,42 @@ Page({
   resetFrom () {
     this.resetOlympusModel()
     let emptyFormData = JSON.parse(JSON.stringify(this.data.formDataCopy))
-    this.setData({
-      formData: emptyFormData
-    })
+    this.setData({ formData: emptyFormData })
     this.scrollToTop()
+    this.getPersonInfo()
   },
   scrollToTop () {
     wx.pageScrollTo({
       scrollTop: 0
     })
+  },
+  /**
+   * 保存用户信息到本地，以便后续填充
+   */
+  savePersonInfo () {
+    let { company, submitter, area } = this.data.formData
+    try {
+      wx.setStorageSync('company', company)
+      wx.setStorageSync('submitter', submitter)
+      wx.setStorageSync('area', area)
+    } catch (e) { }
+  },
+  /**
+   * 自动填充上次提交的用户信息
+   */
+  getPersonInfo () {
+    // 设置上缓存的值
+    try {
+      let company = wx.getStorageSync('company')
+      if (company) {
+        let submitter = wx.getStorageSync('submitter')
+        let area = wx.getStorageSync('area')
+        this.setData({
+          ['formData.company']: company,
+          ['formData.submitter']: submitter,
+          ['formData.area']: parseInt(area)
+        })
+      }
+    } catch (e) { }
   }
 })

@@ -10,8 +10,11 @@ const fieldName = {
   year: '购买年份',
   bedNum: '科室床位数',
   income: '科室收入',
-  operationNum: '科室总手术量',
-  percent: '腔镜手术占比'
+  operationNum: '每月平均手术量',
+  percent: '腔镜手术占比',
+  company: '提交人公司',
+  submitter: '提交人姓名',
+  area: '地区'
 }
 
 const fieldType = {
@@ -26,7 +29,10 @@ const fieldType = {
   bedNum: 'number',
   income: 'number',
   operationNum: 'number',
-  percent: 'number'
+  percent: 'number',
+  company: 'string',
+  submitter: 'string',
+  area: 'string'
 }
 
 const TEXT_MAX_LEN = 100
@@ -39,10 +45,10 @@ function validate (formData) {
     notify(`请选择${fieldName['isOlympus']}`)
     return false
   }
-  let checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'olympusModel', 'year', 'bedNum', 'income', 'operationNum', 'percent']
+  let checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'olympusModel', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter', 'area']
   // 为其它的时候
   if (formData.isOlympus == 1) {
-    checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'model', 'year', 'bedNum', 'income', 'operationNum', 'percent']
+    checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'model', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter', 'area']
   }
   let isok = true
   for (let i = 0, le = checkItem.length; i < le; i++) {

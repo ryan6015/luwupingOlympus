@@ -11,7 +11,7 @@
       <mp-cell prop="laparNum" title="腔镜数量" ext-class="">
         <input bindinput="formInputChange" type="number" data-field="laparNum" value="{{formData.laparNum}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
-       <mp-cell prop="isOlympus" title="品牌名称" ext-class="">
+      <mp-cell prop="isOlympus" title="品牌名称" ext-class="">
         <picker bindchange="bindIsOlympusChange" value="{{formData.isOlympus}}" range="{{isOlympusOptions}}">
           <view class="weui-select">{{isOlympusOptions[formData.isOlympus]}}</view>
         </picker>
@@ -41,11 +41,22 @@
       <mp-cell prop="income" title="科室收入(万)" ext-class="">
         <input bindinput="formInputChange" type="digit" data-field="income" value="{{formData.income}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
-      <mp-cell prop="operationNum" title="科室总手术量" ext-class="">
+      <mp-cell prop="operationNum" title="每月平均手术量" ext-class="">
         <input bindinput="formInputChange" type="number" data-field="operationNum" value="{{formData.operationNum}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="percent" title="腔镜手术占比(%)" ext-class="">
         <input bindinput="formInputChange" type="digit" data-field="percent" value="{{formData.percent}}" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="company" title="提交人公司" ext-class="">
+        <input bindinput="formInputChange" data-field="company" value="{{formData.company}}" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="submitter" title="提交人姓名" ext-class="">
+        <input bindinput="formInputChange" data-field="submitter" value="{{formData.submitter}}" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="area" title="地区" ext-class="">
+        <picker bindchange="bindAreaChange" value="{{formData.area}}" range="{{areaOptions}}">
+          <view class="weui-select">{{areaOptions[formData.area]}}</view>
+        </picker>
       </mp-cell>
     </mp-cells>
   </mp-form>
