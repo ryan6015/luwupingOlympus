@@ -37,6 +37,7 @@ Page({
     oneButton: [{ text: '确定' }],
     dialogShow: false,
     submitBtnDisable: false,
+    endYear: '2020-01-01',
     olympusModelOptions: [
       { 'gid': 0, 'name': 'OTV--S400', 'checked': false},
       { 'gid': 1, 'name': 'OTV-S300', 'checked': false},
@@ -52,11 +53,18 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    let endDate = this.getDate()
     let b = JSON.stringify(this.data.formData)
     let a = JSON.parse(b)
     this.setData({
-      formDataCopy: a
+      formDataCopy: a,
+      endYear: endDate
     })
+  },
+  getDate () {
+    let now = new Date()
+    let year = now.getFullYear()
+    return `${year}-01-01`
   },
   submitForm: function () {
     if (validateJs.validate(this.data.formData)) {

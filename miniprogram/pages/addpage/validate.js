@@ -39,7 +39,7 @@ function validate (formData) {
     notify(`请选择${fieldName['isOlympus']}`)
     return false
   }
-  let checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'olympusModel']
+  let checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'olympusModel', 'year', 'bedNum', 'income', 'operationNum', 'percent']
   // 为其它的时候
   if (formData.isOlympus == 1) {
     checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'model', 'year', 'bedNum', 'income', 'operationNum', 'percent']

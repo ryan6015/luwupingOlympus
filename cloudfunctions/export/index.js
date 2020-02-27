@@ -30,7 +30,7 @@ exports.main = async (event, context) => {
 
   let fileName = 'OlympusInfo.xlsx'
   let fileData = []
-  let header = ['医院名称', '科室', '品牌名称', '型号', '腔镜数量', '购买年份', '科室床位数', '科室收入', '科室总手术量', '腔镜手术占比(%)']
+  let header = ['医院名称', '科室', '品牌名称', '型号', '腔镜数量', '购买年份', '科室床位数(张)', '科室收入(万)', '科室总手术量', '腔镜手术占比(%)']
   fileData.push(header)
   let dataResult = datalist.data || datalist.result.data
   dataResult.forEach(item => {

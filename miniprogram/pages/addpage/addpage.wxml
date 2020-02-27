@@ -1,5 +1,5 @@
 <!--miniprogram/pages/addpage/addpage.wxml-->
-<mp-form-page title="Olympus信息收集" subtitle="">
+<mp-form-page title="腔镜信息收集" subtitle="">
   <mp-form id="form" models="{{formData}}">
     <mp-cells ext-class="" title="">
       <mp-cell prop="hospitalName" title="医院名称" ext-class="">
@@ -30,21 +30,21 @@
       <mp-cell prop="model" title="型号" ext-class="" wx:if="{{formData.isOlympus == 1}}">
         <input bindinput="formInputChange" data-field="model" class="weui-input" placeholder="请输入"/>
       </mp-cell>
-      <mp-cell prop="year" title="购买年份" ext-class="" wx:if="{{formData.isOlympus == 1}}">
-        <picker data-field="year" mode="date" fields="year" bindchange="bindYearChange">
+      <mp-cell prop="year" title="购买年份" ext-class="">
+        <picker data-field="year" mode="date" fields="year" end="{{endYear}}" bindchange="bindYearChange">
           <view class="weui-input">{{formData.year}}</view>
         </picker>
       </mp-cell>
-      <mp-cell prop="bedNum" title="科室床位数" ext-class="" wx:if="{{formData.isOlympus == 1}}">
+      <mp-cell prop="bedNum" title="科室床位数(张)" ext-class="">
         <input bindinput="formInputChange" type="number" data-field="bedNum" class="weui-input" placeholder="请输入"/>
       </mp-cell>
-      <mp-cell prop="income" title="科室收入" ext-class="" wx:if="{{formData.isOlympus == 1}}">
-        <input bindinput="formInputChange" type="number" data-field="income" class="weui-input" placeholder="请输入"/>
+      <mp-cell prop="income" title="科室收入(万)" ext-class="">
+        <input bindinput="formInputChange" type="digit" data-field="income" class="weui-input" placeholder="请输入"/>
       </mp-cell>
-      <mp-cell prop="operationNum" title="科室总手术量" ext-class="" wx:if="{{formData.isOlympus == 1}}">
+      <mp-cell prop="operationNum" title="科室总手术量" ext-class="">
         <input bindinput="formInputChange" type="number" data-field="operationNum" class="weui-input" placeholder="请输入"/>
       </mp-cell>
-      <mp-cell prop="percent" title="腔镜手术占比(%)" ext-class="" wx:if="{{formData.isOlympus == 1}}">
+      <mp-cell prop="percent" title="腔镜手术占比(%)" ext-class="">
         <input bindinput="formInputChange" type="digit" data-field="percent" class="weui-input" placeholder="请输入"/>
       </mp-cell>
     </mp-cells>
