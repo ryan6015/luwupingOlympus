@@ -13,7 +13,7 @@
       </mp-cell>
       <mp-cell prop="isOlympus" title="品牌名称" ext-class="">
         <picker bindchange="bindIsOlympusChange" value="{{formData.isOlympus}}" range="{{isOlympusOptions}}">
-          <view class="weui-select">{{isOlympusOptions[formData.isOlympus]}}</view>
+          <view class="weui-input">{{isOlympusOptions[formData.isOlympus]}}</view>
         </picker>
       </mp-cell>
     </mp-cells>
@@ -55,7 +55,7 @@
       </mp-cell>
       <mp-cell prop="area" title="地区" ext-class="">
         <picker bindchange="bindAreaChange" value="{{formData.area}}" range="{{areaOptions}}">
-          <view class="weui-select">{{areaOptions[formData.area]}}</view>
+          <view class="weui-input">{{areaOptions[formData.area]}}</view>
         </picker>
       </mp-cell>
     </mp-cells>
