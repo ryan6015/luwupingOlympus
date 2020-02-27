@@ -1,0 +1,13 @@
+<!--miniprogram/pages/result/result.wxml-->
+<view class="page">
+  <mp-msg type="success" title="提交成功">
+    <view slot="desc">感谢您的参与，幸苦了。</view>
+    <view slot="handle">
+      <button class="weui-btn" type="primary" bindtap="navigateToAdd">确定</button>
+      <button class="weui-btn" type="default" bindtap="navigateToQuery">去查询页</button>
+    </view>
+    <view slot="footer">
+      <view class="weui-footer__text">腔镜信息收集</view>
+    </view>
+  </mp-msg>
+</view>

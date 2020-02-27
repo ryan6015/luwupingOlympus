@@ -100,14 +100,22 @@ Page({
         data: submitData
       }).then(res => {
         this.enableBtnAndHideLoading()
-        wx.showToast({ title: '提交成功！' })
         this.savePersonInfo()
         this.resetFrom()
+        this.navigatorToResultPage()
       }).catch(() => {
         this.enableBtnAndHideLoading()
         wx.showToast({ title: '提交失败!', icon: 'none' })
       })
     }
+  },
+  navigatorToResultPage () {
+    wx.navigateTo({
+      url: '/pages/result/result',
+      fail() {
+        wx.showToast({ title: '提交成功！' })
+      }
+    })
   },
   /**
    * 提交成功后关闭提交按钮禁用和隐藏loading
