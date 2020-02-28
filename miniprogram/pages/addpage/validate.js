@@ -45,10 +45,10 @@ function validate (formData) {
     notify(`请选择${fieldName['isOlympus']}`)
     return false
   }
-  let checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'olympusModel', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter', 'area']
+  let checkItem = ['area', 'hospitalName', 'department', 'laparNum', 'brand', 'olympusModel', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter']
   // 为其它的时候
   if (formData.isOlympus == 1) {
-    checkItem = ['hospitalName', 'department', 'laparNum', 'brand', 'model', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter', 'area']
+    checkItem = ['area', 'hospitalName', 'department', 'laparNum', 'brand', 'model', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter']
   }
   let isok = true
   for (let i = 0, le = checkItem.length; i < le; i++) {

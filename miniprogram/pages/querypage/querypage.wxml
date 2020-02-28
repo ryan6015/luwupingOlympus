@@ -1,2 +1,8 @@
 <!--miniprogram/pages/querypage/querypage.wxml-->
-<button class="weui-btn" type="primary" disabled="{{btnDisable}}" bindtap="exportExcel">导出全部数据</button>
+<view class="url">
+  <text wx:if="{{!fileUrl}}">点击生成最新Excel按钮生成下载链接</text>
+  <text>{{fileUrl}}</text>
+</view>
+<button class="weui-btn" type="primary" disabled="{{btnDisable}}" bindtap="exportExcel">生成最新Excel</button>
+<button class="weui-btn" type="primary" disabled="{{fileUrl == ''}}" bindtap="copyLink">点击复制下载地址</button>
+<button class="weui-btn" type="primary" disabled="{{fileID == '' || viewFile}}" bindtap="viewExcel">在线预览</button>

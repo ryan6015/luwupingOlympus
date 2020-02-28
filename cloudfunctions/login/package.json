@@ -1,5 +1,5 @@
 {
-  "name": "export",
+  "name": "login",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,8 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "request-promise": "^4.2.5",
-    "node-xlsx": "^0.15.0",
     "wx-server-sdk": "latest"
   }
 }

@@ -24,9 +24,9 @@
       },
       {
         "pagePath": "pages/querypage/querypage",
-        "text": "查询",
-        "iconPath": "images/query.png",
-        "selectedIconPath": "images/query_active.png"
+        "text": "导出",
+        "iconPath": "images/cloud.png",
+        "selectedIconPath": "images/cloud_active.png"
       }
     ]
   },

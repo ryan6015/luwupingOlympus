@@ -2,6 +2,11 @@
 <mp-form-page title="腔镜信息收集" subtitle="">
   <mp-form id="form" models="{{formData}}">
     <mp-cells ext-class="" title="">
+      <mp-cell prop="area" title="地区" ext-class="">
+        <picker bindchange="bindAreaChange" value="{{formData.area}}" range="{{areaOptions}}">
+          <view class="weui-input">{{areaOptions[formData.area]}}</view>
+        </picker>
+      </mp-cell>
       <mp-cell prop="hospitalName" title="医院名称" ext-class="">
         <input bindinput="formInputChange" data-field="hospitalName" value="{{formData.hospitalName}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
@@ -52,11 +57,6 @@
       </mp-cell>
       <mp-cell prop="submitter" title="提交人姓名" ext-class="">
         <input bindinput="formInputChange" data-field="submitter" value="{{formData.submitter}}" class="weui-input" placeholder="请输入"/>
-      </mp-cell>
-      <mp-cell prop="area" title="地区" ext-class="">
-        <picker bindchange="bindAreaChange" value="{{formData.area}}" range="{{areaOptions}}">
-          <view class="weui-input">{{areaOptions[formData.area]}}</view>
-        </picker>
       </mp-cell>
     </mp-cells>
   </mp-form>

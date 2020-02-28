@@ -1,16 +1,15 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-const rp = require('request-promise')
+cloud.init()
 //操作excel用的类库
 const xlsx = require('node-xlsx');
-cloud.init()
+const rp = require('request-promise')
 const infoDB = cloud.database().collection('info')
 const MAX_LIMIT = 1000
 const fileName = 'OlympusInfo.xlsx'
 const header = ['医院名称', '科室', '品牌名称', '型号', '腔镜数量', '购买年份', '科室床位数(张)', '科室收入(万)', '科室总手术量', '腔镜手术占比(%)', '提交人公司', '提交人姓名', '地区']
 const appid = 'wx83e737f152521028'
 const secret = 'b85fc58bdfe254c645f6b5fda337fedb' 
-
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -45,44 +44,26 @@ exports.main = async (event, context) => {
     data: fileData
   }])
   //4，把excel文件保存到云存储里
-  let {fileID} = await cloud.uploadFile({
+  let { fileID } = await cloud.uploadFile({
     cloudPath: fileName,
     fileContent: buffer //excel二进制文件
   })
-  let downloadUrl = await getDownloadUrl(fileID)
-  return {
-    fileID,
-    downloadUrl
-  }
-}
-
-async function getDownloadUrl(fileID) {
   // 获取文件下载链接
   let msgCheckUrl = 'https://api.weixin.qq.com/tcb/batchdownloadfile?access_token='
   // 入口凭证
   let tokenUrl = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${secret}`
   let tokenResponse = await rp(tokenUrl)
-  let token = JSON.parse(tokenResponse).access_token
-  let fileInfo = {
-    "env": "luwupingserver-zg879",
-    "file_list": [
-      {
-        "fileid": fileID,
-        "max_age": 7200
-      }
-    ]
-  }
-  let option = {
-    method: 'POST',
-    uri: msgCheckUrl + token,
-    body: fileInfo,
-    json: true // Automatically stringifies the body to JSON
-  }
-  let result = await rp(option)
-  if (result.file_list) {
-    return result.file_list[0]['download_url']
-  }
-  return ''
+  // let token = JSON.parse(tokenResponse.body).access_token
+  // let fileInfo = {
+  //   "env": "luwupingserver-zg879",
+  //   "file_list": [
+  //     {
+  //       "fileid": fileID,
+  //       "max_age": 7200
+  //     }
+  //   ]
+  // }
+  return tokenResponse
 }
 
 function setData (item) {
