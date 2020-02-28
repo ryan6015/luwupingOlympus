@@ -107,21 +107,21 @@ Page({
         name: 'checkAdmin',
         data: userInfo
       }).then(res => {
-        this.setAdmin(res.result)
+        this.setAdmin(res.result, userInfo)
       }).catch(() => {
-        this.setAdmin('no')
+        this.setAdmin('no', userInfo)
       })
     }
   },
-  setAdmin (result) {
+  setAdmin(result, userInfo) {
     wx.hideLoading()
     if (result === 'yes') {
       wx.setStorage({ key: "isAdmin", data: "yes" })
       wx.setStorage({ key: "checktime", data: new Date() })
       this.setData({ isAdmin: true })
-      wx.showToast({ title: '欢迎管理员~', icon: 'none' })
+      wx.showToast({ title: `欢迎管理员${userInfo.nickName}~`, icon: 'none' })
     } else {
-      wx.showToast({ title: '您不具有管理员权限', icon: 'none' })
+      wx.showToast({ title: `${userInfo.nickName}您不具有管理员权限`, icon: 'none' })
       this.setData({ isAdmin: false })
       wx.removeStorage({ key: "isAdmin" })
       wx.removeStorage({ key: "checktime" })
