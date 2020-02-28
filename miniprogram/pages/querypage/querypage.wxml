@@ -1,8 +1,10 @@
 <!--miniprogram/pages/querypage/querypage.wxml-->
 <view class="url">
-  <text wx:if="{{!fileUrl}}">点击生成最新Excel按钮生成下载链接</text>
+  <text wx:if="{{!isAdmin}}">该页面需要管理员权限，点击下面按钮进行权限校验。</text>
+  <text wx:if="{{isAdmin && !fileUrl}}">点击生成最新Excel按钮生成下载链接</text>
   <text>{{fileUrl}}</text>
 </view>
-<button class="weui-btn" type="primary" disabled="{{btnDisable}}" bindtap="exportExcel">生成最新Excel</button>
-<button class="weui-btn" type="primary" disabled="{{fileUrl == ''}}" bindtap="copyLink">点击复制下载地址</button>
-<button class="weui-btn" type="primary" disabled="{{fileID == '' || viewFile}}" bindtap="viewExcel">在线预览</button>
+<button class="weui-btn" type="primary" wx:if="{{isAdmin}}" disabled="{{btnDisable}}" bindtap="exportExcel">生成最新Excel</button>
+<button class="weui-btn" type="primary" wx:if="{{isAdmin}}" disabled="{{fileUrl == ''}}" bindtap="copyLink">点击复制下载地址</button>
+<button class="weui-btn" type="primary" wx:if="{{isAdmin}}" disabled="{{fileID == '' || viewFile}}" bindtap="viewExcel">在线预览</button>
+<button class="weui-btn" type="primary" wx:if="{{!isAdmin}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">权限校验</button>

@@ -7,7 +7,27 @@ Page({
     btnDisable: false,
     fileID: '',
     fileUrl: '',
-    viewFile: false
+    viewFile: false,
+    isAdmin: false
+  },
+  onReady () {
+    let that = this
+    try {
+      var isAdminValue = wx.getStorageSync('isAdmin')
+      var checktime = wx.getStorageSync('checktime')
+      if (isAdminValue && checktime) {
+        // 校验是不是超过5天
+        const TIMEZONE = 1000 * 60 * 60 * 24 * 5
+        let now = new Date().getTime()
+        let checktimes = checktime.getTime()
+        if (now - checktimes > TIMEZONE) {
+          wx.removeStorage({ key: "isAdmin" })
+          wx.removeStorage({ key: "checktime" })
+        } else {
+          this.setData({ isAdmin: true })
+        }
+      }
+    } catch (e) { }
   },
   exportExcel () {
     let that = this
@@ -77,5 +97,34 @@ Page({
         })
       }
     })
+  },
+  onGotUserInfo (e) {
+    let { userInfo } = e.detail
+    // 通过校验
+    if (e.detail.userInfo) {
+      wx.showLoading({ title: '校验中...' })
+      wx.cloud.callFunction({
+        name: 'checkAdmin',
+        data: userInfo
+      }).then(res => {
+        this.setAdmin(res.result)
+      }).catch(() => {
+        this.setAdmin('no')
+      })
+    }
+  },
+  setAdmin (result) {
+    wx.hideLoading()
+    if (result === 'yes') {
+      wx.setStorage({ key: "isAdmin", data: "yes" })
+      wx.setStorage({ key: "checktime", data: new Date() })
+      this.setData({ isAdmin: true })
+      wx.showToast({ title: '欢迎管理员~', icon: 'none' })
+    } else {
+      wx.showToast({ title: '您不具有管理员权限', icon: 'none' })
+      this.setData({ isAdmin: false })
+      wx.removeStorage({ key: "isAdmin" })
+      wx.removeStorage({ key: "checktime" })
+    }
   }
 })
