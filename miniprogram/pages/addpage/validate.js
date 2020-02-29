@@ -45,19 +45,22 @@ function validate (formData) {
     notify(`请选择${fieldName['isOlympus']}`)
     return false
   }
-  let checkItem = ['area', 'hospitalName', 'department', 'laparNum', 'brand', 'olympusModel', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter']
+  let checkItem = ['area', 'hospitalName', 'department', 'brand', 'olympusModel', 'laparNum', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter']
   // 为其它的时候
   if (formData.isOlympus == 1) {
-    checkItem = ['area', 'hospitalName', 'department', 'laparNum', 'brand', 'model', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter']
+    checkItem = ['area', 'hospitalName', 'department', 'brand', 'model', 'laparNum', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter']
   }
+  // 可选项，选填
+  const allowEmptyItem = ['year', 'bedNum', 'income', 'operationNum', 'percent']
   let isok = true
   for (let i = 0, le = checkItem.length; i < le; i++) {
     let limit = fieldType[checkItem[i]] === 'string' ? TEXT_MAX_LEN : NUM_MAX_LEN
-    if (!textValidate(formData, checkItem[i], limit)) {
+    let isAllowEmpty = allowEmptyItem.indexOf(checkItem[i]) > -1
+    if (!textValidate(formData, checkItem[i], limit, isAllowEmpty)) {
       isok = false
       break
     }
-    if (fieldType[checkItem[i]] === 'number' && !isNumber(formData[checkItem[i]])) {
+    if (fieldType[checkItem[i]] === 'number' && !isEmpty(formData[checkItem[i]]) && !isNumber(formData[checkItem[i]])) {
       notify(`${fieldName[checkItem[i]]}只能输入数字`)
       isok = false
       break
@@ -76,8 +79,8 @@ function validate (formData) {
   return true
 }
 
-function textValidate (formData, filed, len) {
-  if (isEmpty(formData[filed])) {
+function textValidate (formData, filed, len, isAllowEmpty) {
+  if (!isAllowEmpty && isEmpty(formData[filed])) {
     notify(`请输入${fieldName[filed]}`)
     return false
   }

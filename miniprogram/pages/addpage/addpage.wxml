@@ -13,9 +13,6 @@
       <mp-cell prop="department" title="科室" ext-class="">
         <input bindinput="formInputChange" data-field="department" value="{{formData.department}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
-      <mp-cell prop="laparNum" title="腔镜数量" ext-class="">
-        <input bindinput="formInputChange" type="number" data-field="laparNum" value="{{formData.laparNum}}" class="weui-input" placeholder="请输入"/>
-      </mp-cell>
       <mp-cell prop="isOlympus" title="品牌名称" ext-class="">
         <picker bindchange="bindIsOlympusChange" value="{{formData.isOlympus}}" range="{{isOlympusOptions}}">
           <view class="weui-input">{{isOlympusOptions[formData.isOlympus]}}</view>
@@ -34,6 +31,9 @@
       </mp-cell>
       <mp-cell prop="model" title="型号" ext-class="" wx:if="{{formData.isOlympus == 1}}">
         <input bindinput="formInputChange" data-field="model" value="{{formData.model}}" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
+      <mp-cell prop="laparNum" title="腔镜数量" ext-class="">
+        <input bindinput="formInputChange" type="number" data-field="laparNum" value="{{formData.laparNum}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
       <mp-cell prop="year" title="购买年份" ext-class="">
         <picker data-field="year" mode="date" fields="year" end="{{endYear}}" bindchange="bindYearChange">
