@@ -36,7 +36,9 @@ Page({
       // 提交人姓名
       submitter: '',
       // 地区
-      area: ''
+      area: '',
+      // 备注
+      note: ''
     },
     // 表格数据空备份，用做还原表格
     formDataCopy: {},

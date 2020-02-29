@@ -7,7 +7,7 @@ cloud.init()
 const infoDB = cloud.database().collection('info')
 const MAX_LIMIT = 1000
 const fileName = 'OlympusInfo.xlsx'
-const header = ['医院名称', '科室', '品牌名称', '型号', '腔镜数量', '购买年份', '科室床位数(张)', '科室收入(万)', '科室总手术量', '腔镜手术占比(%)', '提交人公司', '提交人姓名', '地区']
+const header = ['地区', '医院名称', '科室', '品牌名称', '型号', '腔镜数量', '购买年份', '科室床位数(张)', '科室收入(万)', '每月平均手术量', '腔镜手术占比(%)', '提交人公司', '提交人姓名', '备注']
 const appid = 'wx83e737f152521028'
 const secret = 'b85fc58bdfe254c645f6b5fda337fedb' 
 
@@ -87,6 +87,7 @@ async function getDownloadUrl(fileID) {
 
 function setData (item) {
   let arr = []
+  arr.push(item.area)
   arr.push(item.hospitalName)
   arr.push(item.department)
   arr.push(item.brand)
@@ -103,6 +104,6 @@ function setData (item) {
   arr.push(item.percent)
   arr.push(item.company)
   arr.push(item.submitter)
-  arr.push(item.area)
+  arr.push(item.note)
   return arr
 }

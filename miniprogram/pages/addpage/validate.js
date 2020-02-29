@@ -65,6 +65,11 @@ function validate (formData) {
       isok = false
       break
     }
+    if (checkItem[i] === 'note' && isGtLength(formData[checkItem[i]], 1000)) {
+      notify('备注字段超出长度限制。')
+      isok = false
+      break
+    }
   }
   if (!isok) {
     return false

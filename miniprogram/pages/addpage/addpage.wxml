@@ -58,6 +58,9 @@
       <mp-cell prop="submitter" title="提交人姓名" ext-class="">
         <input bindinput="formInputChange" data-field="submitter" value="{{formData.submitter}}" class="weui-input" placeholder="请输入"/>
       </mp-cell>
+      <mp-cell prop="note" title="备注" ext-class="">
+        <input bindinput="formInputChange" data-field="note" value="{{formData.note}}" class="weui-input" placeholder="请输入"/>
+      </mp-cell>
     </mp-cells>
   </mp-form>
   <view slot="button">
