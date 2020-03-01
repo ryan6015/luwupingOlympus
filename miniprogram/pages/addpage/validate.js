@@ -3,7 +3,7 @@ const fieldName = {
   hospitalName: '医院名称',
   department: '科室',
   isOlympus: '品牌名称',
-  olympusModel: 'Olympus品牌型号',
+  olympusModel: '型号',
   laparNum: '腔镜数量',
   brand: '其它品牌名称',
   model: '型号',
@@ -14,7 +14,8 @@ const fieldName = {
   percent: '腔镜手术占比',
   company: '提交人公司',
   submitter: '提交人姓名',
-  area: '地区'
+  area: '地区',
+  note: '备注'
 }
 
 const fieldType = {
@@ -139,3 +140,4 @@ function isNumber (value) {
 }
 
 module.exports.validate = validate 
+module.exports.fieldName = fieldName

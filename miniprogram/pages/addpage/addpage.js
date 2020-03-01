@@ -45,7 +45,7 @@ Page({
     // 品牌选项值
     isOlympusOptions: ['Olympus', '其它'],
     // 弹窗按钮
-    oneButton: [{ text: '确定' }],
+    oneButton: [{ text: '取消' }, { text: '确定' }],
     // 弹窗开关
     dialogShow: false,
     // 提交按钮禁用
@@ -87,29 +87,59 @@ Page({
     let now = new Date()
     return `${now.getFullYear()}-01-01`
   },
+  transForSubmit() {
+    let submitData = JSON.parse(JSON.stringify(this.data.formData))
+    submitData['area'] = this.data.areaOptions[submitData.area]
+    submitData['createtime'] = new Date()
+    return submitData
+  },
   /**
    * 提交数据
    */
   submitForm: function () {
     if (validateJs.validate(this.data.formData)) {
-      this.setData({ submitBtnDisable: true })
-      wx.showLoading({ title: '数据提交中...' })
-      // 转换成中文名字地区后提交数据
-      let submitData = JSON.parse(JSON.stringify(this.data.formData))
-      submitData['area'] = this.data.areaOptions[submitData.area]
-      wx.cloud.callFunction({
-        name: 'add',
-        data: submitData
-      }).then(res => {
-        this.enableBtnAndHideLoading()
-        this.savePersonInfo()
-        this.resetFrom()
-        this.navigatorToResultPage()
-      }).catch(() => {
-        this.enableBtnAndHideLoading()
-        wx.showToast({ title: '提交失败!', icon: 'none' })
+      let submitData = this.transForSubmit()
+      this.setData({
+        dialogShow: true,
+        formDataText: this.formateDisplayText(submitData)
       })
     }
+  },
+  formateDisplayText(submitData) {
+    let orderItem = ['area', 'hospitalName', 'department', 'brand', 'olympusModel', 'laparNum', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter', 'note']
+    // 为其它的时候
+    if (this.data.formData.isOlympus == 1) {
+      orderItem = ['area', 'hospitalName', 'department', 'brand', 'model', 'laparNum', 'year', 'bedNum', 'income', 'operationNum', 'percent', 'company', 'submitter', 'note']
+    }
+    let displyText = ''
+    for (let i = 0, len = orderItem.length; i < len; i++) {
+      if (orderItem[i] === 'olympusModel') {
+        displyText += '型号：' + submitData[orderItem[i]].join(',') + '\n'
+      } else {
+        displyText += validateJs.fieldName[orderItem[i]] + '：' + submitData[orderItem[i]] + '\n'
+      }
+    }
+    displyText += '\n请仔细核对以上数据，数据提交后只允许修改备注字段。'
+    // TODO 格式化文本
+    return displyText
+  },
+  doSubmit () {
+    let submitData = this.transForSubmit()
+    this.setData({ submitBtnDisable: true })
+    wx.showLoading({ title: '数据提交中...' })
+    // 转换成中文名字地区后提交数据
+    wx.cloud.callFunction({
+      name: 'add',
+      data: submitData
+    }).then(res => {
+      this.navigatorToResultPage()
+      this.enableBtnAndHideLoading()
+      this.savePersonInfo()
+      this.resetFrom()
+    }).catch(() => {
+      this.enableBtnAndHideLoading()
+      wx.showToast({ title: '提交失败!', icon: 'none' })
+    })
   },
   navigatorToResultPage () {
     wx.navigateTo({
@@ -178,8 +208,14 @@ Page({
       [`formData.year`]: e.detail.value
     })
   },
+  /**
+   * 确认提交模态框按钮事件
+   */
   tapDialogButton (e) {
     this.setData({ dialogShow: false })
+    if (e.detail.index === 1) {
+      this.doSubmit()
+    }
   },
   /**
    * 重置olympus型号选择

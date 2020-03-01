@@ -67,7 +67,7 @@
     <button class="weui-btn" type="primary" bindtap="submitForm" disabled="{{submitBtnDisable}}">确定</button>
     <button class="weui-btn" type="warn" bindtap="resetFrom">重置</button>
   </view>
-  <mp-dialog title="录入结果" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
-    <view>{{formDataText}}</view>
+  <mp-dialog title="请核对" show="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{oneButton}}">
+    <view style="text-align: left;font-size: 14px;"><text>{{formDataText}}</text></view>
   </mp-dialog>
 </mp-form-page>
