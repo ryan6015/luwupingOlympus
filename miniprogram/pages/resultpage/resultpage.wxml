@@ -1,0 +1,35 @@
+<!--miniprogram/pages/resultpage/resultpage.wxml-->
+<view>
+  <view class="total">—— 你总共录入了{{totalRecord}}条数据 ——</view>
+  <view class="card" wx:for="{{list}}" wx:key="{{index}}">
+    <view class="card-title">
+      <text>{{item.createtime}}</text>
+      <view class="card-btn" bindtap="modify" data-id="{{item._id}}">修改</view>
+    </view>
+    <view class="card-line">{{item.area}}-{{item.hospitalName}}-{{item.department}}\n</view>
+    <view class="card-line">{{item.brand}}：{{item.model}}\n</view>
+    <view class="card-line">
+      <text class="card-light">腔镜数量：</text><text>{{item.laparNum}} / </text>
+      <text class="card-light">购买年份：</text><text>{{item.year}}\n</text>
+    </view>
+    <view class="card-line">
+      <text class="card-light">科室床位：</text><text>{{item.bedNum}} / </text>
+      <text class="card-light">科室收入：</text><text>{{item.income}}\n</text>
+    </view>
+    <view class="card-line"><text class="card-light">每月平均手术量：</text><text>{{item.operationNum}}\n</text></view>
+    <view class="card-line"><text class="card-light">腔镜手术占比：</text><text>{{item.percent}}\n</text></view>
+    <view class="card-line">{{item.company}}：{{item.submitter}}\n</view>
+    <view class="card-line"><text class="card-light">备注：{{item.note}}</text></view>
+  </view>
+</view>
+<mp-halfScreenDialog 
+  bindbuttontap="buttontap"
+  show="{{show}}"
+  maskClosable="{{false}}" 
+  title="修改备注" 
+  buttons="{{buttons}}"
+>
+  <view slot="desc">
+    ddd
+  </view>
+</mp-halfScreenDialog>

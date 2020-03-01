@@ -7,3 +7,37 @@
   border: 1px dashed #d7d7d7;
   color: #999;
 }
+
+.card {
+  margin: 16px;
+  padding: 12px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #e5e5e5;
+  font-size: 14px;
+}
+
+.card-title {
+  border-bottom: 1px dashed #d7d7d7;
+  padding-bottom: 8px;
+}
+
+.card-line {
+  margin-top: 5px;
+}
+
+.card-light {
+  color: #666666;
+}
+
+.card-btn {
+  float: right;
+  color: #04BE02;
+}
+
+.total {
+  margin-top: 12px;
+  color: #666666;
+  font-size: 14px;
+  text-align: center;
+}
+

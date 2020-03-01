@@ -1,0 +1,8 @@
+{
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#e5e5e5",
+  "onReachBottomDistance": 100,
+  "usingComponents": {
+    "mp-halfScreenDialog": "../../miniprogram_npm/weui-miniprogram/half-screen-dialog/half-screen-dialog"
+  }
+}

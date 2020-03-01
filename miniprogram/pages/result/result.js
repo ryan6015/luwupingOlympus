@@ -10,7 +10,7 @@ Page({
     this.navigatePage('/pages/addpage/addpage')
   },
   navigateToQuery () {
-    this.navigatePage('/pages/querypage/querypage')
+    this.navigatePage('/pages/resultpage/resultpage')
   },
   navigatePage (url) {
     wx.switchTab({

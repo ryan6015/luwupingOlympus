@@ -1,5 +1,5 @@
 <!--miniprogram/pages/addpage/addpage.wxml-->
-<mp-form-page title="腔镜信息收集" subtitle="">
+<mp-form-page title="腔镜资料收集" subtitle="">
   <mp-form id="form" models="{{formData}}">
     <mp-cells ext-class="" title="">
       <mp-cell prop="area" title="地区" ext-class="">
