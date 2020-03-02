@@ -120,7 +120,7 @@ Page({
       }
     }
     displyText += '\n请仔细核对以上数据，数据提交后只允许修改备注字段。'
-    // TODO 格式化文本
+    // 格式化文本
     return displyText
   },
   doSubmit () {
