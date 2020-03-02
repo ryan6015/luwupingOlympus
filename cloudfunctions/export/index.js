@@ -17,8 +17,7 @@ const secret = 'b85fc58bdfe254c645f6b5fda337fedb'
 // 云函数入口函数
 exports.main = async (event, context) => {
   // 先取出集合记录总数
-  const countResult = await infoDB.count()
-  const total = countResult.total
+  const { total } = await infoDB.count()
   // 计算需分几次取
   const batchTimes = Math.ceil(total / MAX_LIMIT)
   // 承载所有读操作的 promise 的数组
@@ -27,13 +26,17 @@ exports.main = async (event, context) => {
     const promise = infoDB.skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
     tasks.push(promise)
   }
-  // 等待所有数据取数完成
-  const datalist = (await Promise.all(tasks)).reduce((acc, cur) => {
-    return {
-      data: acc.data.concat(cur.data),
-      errMsg: acc.errMsg
-    }
-  })
+
+  let datalist = { data: []}
+  if (tasks.length > 0) {
+    // 等待所有数据取数完成
+    datalist = (await Promise.all(tasks)).reduce((acc, cur) => {
+      return {
+        data: acc.data.concat(cur.data),
+        errMsg: acc.errMsg
+      }
+    })
+  }
 
   let fileData = []
   fileData.push(header)
