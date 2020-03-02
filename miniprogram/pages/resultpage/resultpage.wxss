@@ -1,1 +1,14 @@
 /* miniprogram/pages/resultpage/resultpage.wxss */
+.myhalfScreenDialog .weui-half-screen-dialog__hd__side .weui-icon-btn_more {
+  display: none;
+}
+.myhalfScreenDialog .weui-half-screen-dialog__ft {
+  padding: 15px 0;
+}
+
+.mytextarea {
+  border: 1px solid #d7d7d7;
+  width: calc(100% - 22px);
+  border-radius: 3px;
+  padding: 10px;
+}

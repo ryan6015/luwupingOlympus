@@ -65,6 +65,9 @@ Page({
       }
     })
   },
+  /**
+   * 格式化页面显示
+   */
   formatDisplay: function (list) {
     if (list && list.length > 0) {
       let numItem = ['laparNum', 'bedNum', 'income', 'operationNum']
@@ -112,18 +115,26 @@ Page({
     let seconds = this.formatNumber(time.getSeconds())
     return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + seconds
   },
+  /**
+   * 点击修改按钮
+   */
   modify: function (e) {
     let _id = e.currentTarget.dataset['id']
     let datalist = this.data.list
     let activeItem
+    let activeIndex
     for (let i = 0, len = datalist.length; i < len; i++) {
       if (datalist[i]['_id'] === _id) {
         activeItem = datalist[i]
+        activeIndex = i
+        break
       }
     }
-    this.setData({ activeItem: JSON.parse(JSON.stringify(activeItem)) })
-    // TODO 修改备注
-    this.setData({ show: true })
+    this.setData({
+      activeIndex,
+      activeItem: JSON.parse(JSON.stringify(activeItem)),
+      show: true
+    })
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -150,11 +161,39 @@ Page({
       })
     }
   },
+  bindTextAreaChange (e) {
+    this.setData({ ['activeItem.note']: e.detail.value })
+  },
   buttontap (e) {
-    if (e.detail.index === 0) {
-      this.setData({ show: false })
-    } else {
-      // TODO 修改
+    let that = this
+    this.setData({ show: false })
+    if (e.detail.index === 1) {
+      const { _id, note } = this.data.activeItem
+      wx.showLoading({ title: '数据提交中...' })
+      wx.cloud.callFunction({
+        name: 'updateRecord',
+        data: {
+          _id,
+          note
+        }
+      }).then(res => {
+        wx.hideLoading()
+        if (res.result > 0) {
+          wx.showToast({ title: '修改成功' })
+          that.setData({ [`list[${this.data.activeIndex}].note`]: note })
+        } else {
+          wx.showToast({
+            title: '修改失败',
+            icon: 'none'
+          })
+        }
+      }).catch(() => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '修改失败',
+          icon: 'none'
+        })
+      })
     }
   }
 })

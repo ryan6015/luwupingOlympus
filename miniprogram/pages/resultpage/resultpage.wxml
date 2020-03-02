@@ -25,11 +25,11 @@
 <mp-halfScreenDialog 
   bindbuttontap="buttontap"
   show="{{show}}"
-  maskClosable="{{false}}" 
   title="修改备注" 
   buttons="{{buttons}}"
+  extClass="myhalfScreenDialog"
 >
   <view slot="desc">
-    ddd
+    <textarea class="weui-textarea mytextarea" bindinput="bindTextAreaChange" maxlength="{{1000}}" fixed="{{true}}" focus="{{true}}" value="{{activeItem.note}}" placeholder="可以在备注中说明数据的修改情况" />
   </view>
 </mp-halfScreenDialog>
