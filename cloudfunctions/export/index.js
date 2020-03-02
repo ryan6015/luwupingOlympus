@@ -3,7 +3,9 @@ const cloud = require('wx-server-sdk')
 const rp = require('request-promise')
 //操作excel用的类库
 const xlsx = require('node-xlsx');
-cloud.init()
+cloud.init({
+  env: cloud.DYNAMIC_CURRENT_ENV
+})
 const infoDB = cloud.database().collection('info')
 const MAX_LIMIT = 1000
 const fileName = 'OlympusInfo.xlsx'
